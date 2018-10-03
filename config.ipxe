@@ -1,0 +1,10 @@
+#!ipxe
+
+set esc:hex 1b            # ANSI escape character - "^["
+set cls ${esc:string}[2J  # ANSI clear screen sequence - "^[[2J"
+
+# Domain to load from
+set boot_domain hackboot.xyz
+
+# Color Scheme
+cpair --foreground 7 --background 0 1

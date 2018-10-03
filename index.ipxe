@@ -1,0 +1,35 @@
+#!ipxe
+
+:config
+chain config.ipxe ||
+:end_config
+
+:set_arch
+isset ${arch} && goto end_set_arch ||
+cpuid --ext 29 && set arch x86_64 || set arch i386
+:end_set_arch
+
+:main
+menu hackboot.xyz
+item --gap    Payloads
+item backdoor Backdoors
+item --gap    Utility
+item shell    Enter iPXE shell
+item exit     Exit hackboot.xyz
+choose --default exit --timeout 3000 menu
+echo ${cls}
+goto ${menu} ||
+goto change_menu
+
+:change_menu
+chain ${menu}.ipxe
+goto main
+
+:shell
+echo Dropping to iPXE shell...
+shell
+goto main
+
+:exit
+echo Exiting...
+exit 0
